@@ -276,3 +276,33 @@ end
 Then /^show me the page$/ do
   save_and_open_page
 end
+
+Given /the following (.*?) exist:$/ do |type, table|
+  table.hashes.each do |information|
+    if type == "articles" then Article.create(information)
+    elsif type == "users" then User.create(information)
+    elsif type == "comments" then Comment.create(information)
+    end
+  end
+end
+
+Given /I am logged in as "(.*?)" with pass "(.*?)"$/ do |user, password|
+  visit '/accounts/login'
+  fill_in 'user_login', :with => user
+  fill_in 'user_password', :with => password
+  click_button 'Login'
+  if page.respond_to? :should
+    page.should have_content('Login successful')
+  else
+    assert page.has_content?('Login successful')
+  end
+end
+
+Given /the articles with ids "(\d+)" and "(\d+)" were merged$/ do |one, two|
+  firstArt = Article.find_by_id(one)
+  firstArt.merge_with(two)
+end
+
+Then /"(.*?)" should be author of (\d+) articles$/ do |user, artNum|
+  assert Article.find_all_by_author(User.find_by_name(user).login).size == Integer(artNum)
+end

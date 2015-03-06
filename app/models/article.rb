@@ -466,4 +466,19 @@ class Article < Content
     to = to - 1 # pull off 1 second so we don't overlap onto the next day
     return from..to
   end
+
+  def merge_with(artTwo)
+    article = Article.find_by_id(artTwo)
+    if not self.id or not article.id
+      return false
+    end
+
+    self.body = self.body + "\n\n" + article.body
+    self.comments << article.comments
+    self.save!
+
+    article.destroy
+    return true
+  end
+
 end

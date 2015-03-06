@@ -9,9 +9,9 @@ Feature: Merge Articles
     Given the blog is set up
 
     Given the following users exist:
-      | id | login | password |
-      |  1 | joe   | abc123   |
-      |  2 | john  | abc123   |
+      | id | login | password | email         |
+      |  1 | joe   | abc123   | joe@mail.com  |
+      |  2 | john  | abc123   | john@mail.com |
 
 
     Given the following articles exist:
@@ -20,9 +20,9 @@ Feature: Merge Articles
       | 2  | drugz    | john   | 2       | bad      | true           | 2014-11-10 12:00:34 |
 
     Given the following comments exist:
-      | id | title   | author | body     | article_id | user_id | created_at          |
-      | 1  | money   | joe    | yeah     | 1          | 1       | 2014-12-11 10:00:59 |
-      | 2  | drugz   | john   | lmao     | 2          | 2       | 2014-11-10 12:01:34 |
+      | id | title   | author | body    | article_id | user_id | created_at          |
+      | 1  | money   | joe    | yeah    | 1          | 1       | 2014-12-11 10:00:59 |
+      | 2  | drugz   | john   | lmao    | 2          | 2       | 2014-11-10 12:01:34 |
 
   Scenario: A non-admin cannot merge articles.
     Given I am logged in as "joe" with pass "abc123"
